@@ -11,22 +11,22 @@ $connect = mysqli_connect('localhost','ncvinh','vinh2000','task_manager');
 	<title>Task Manage</title>
 	<meta charset="utf-8">
     <style>
-        td, th { 
-    padding: 10px;
-}
-table { 
-    width: 1000px;
-    text-align: center;
-    border-spacing: 10px;
-    border-collapse: separate;
-}
-table, tr {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
+      button {
+        width: 150px
+      }
+		table { 
+          width: 1000px;
+          text-align: center;
+          border-spacing: 10px;
+          border-collapse: separate;
+		}
+		table, tr {
+          border: 1px solid black;
+          border-collapse: collapse;
+		}
     </style>
 </head>
-<body>
+<body align=center>
 	<div>
     <h1 style="font-family: 'Courier New', Courier, monospace;" >Task Manage</h1>
     <?php
@@ -61,6 +61,7 @@ table, tr {
 
     <form action = "" method = "POST">
     <textarea rows="4" cols="50" id="newtask" name = "newtask" >Nội dung</textarea><br>
+    <br>
     <input type = "submit" value = "Tạo task">
     </form>
     <br><br>
@@ -69,7 +70,7 @@ table, tr {
     <?php
         $sql = "Select id, task, status, create_time, finish_time from tasks where username = '$username' and (status = 0 or status = 1)";
         $query = mysqli_query($connect, $sql);
-        echo "<table>";
+        echo "<table align=center>";
         echo "<tr><th>Task</th><th>Trạng thái</th><th>Ngày tạo</th><th>Ngày hoàn thành</th><th>Hành động</th></tr>";
         while($row = mysqli_fetch_array($query)){
             echo "<tr>";
@@ -81,7 +82,7 @@ table, tr {
             echo "<td>".$status."</td>";
             echo "<td>".htmlspecialchars($row['create_time'])."</td>";
             echo "<td>".htmlspecialchars($row['finish_time'])."</td>";
-            echo "<td>";
+            echo "<td><br>";
             echo "<form method = 'POST'><button type='submit' name='del' value='".$row['id']."'>Xoá</button></form>";
             if($row['status'] != 1){
                 echo "<form method = 'POST'><button type='submit' name='finish' value='".$row['id']."'>Hoàn thành</button></form>";
