@@ -1,7 +1,7 @@
 <?php
-session_start();
-$connect = mysqli_connect('localhost', 'ncvinh', 'vinh2000', 'task_manager');
-mysqli_set_charset($connect, "utf8");
+    session_start();
+	$connect = mysqli_connect('localhost','ncvinh','vinh2000','task_manager');
+	mysqli_set_charset($connect, "utf8");
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,33 +34,28 @@ mysqli_set_charset($connect, "utf8");
 </head>
 <body>
     <?php
-if (isset($_SESSION['username']))
-{
-    header('Location: index.php');
-    exit;
-}
-if (isset($_POST["username"]) && isset($_POST["fullname"]) && isset($_POST["password"]))
-{
-
-    $username = $_POST["username"];
-    $fullname = $_POST["fullname"];
-    $password = $_POST["password"];
-    $sql = "Select * from users where username = '$username'";
-    $query = mysqli_query($connect, $sql);
-    if (mysqli_num_rows($query) > 0)
-    {
-        echo "<script type='text/javascript'>alert('Đã tồn tại tài khoản với username $username');</script>";
-    }
-    else
-    {
-        $sql = "insert into users values ('$username','$password','$fullname')";
-        $query = mysqli_query($connect, $sql);
-        $_SESSION['username'] = $username;
-        header("Location: index.php");
+    if (isset($_SESSION['username'])) {
+        header('Location: index.php');
         exit;
     }
-}
-?>
+    if(isset($_POST["username"])&&isset($_POST["fullname"])&&isset($_POST["password"])){
+        
+        $username = $_POST["username"];
+        $fullname = $_POST["fullname"];
+        $password = $_POST["password"];
+        $sql = "Select * from users where username = '$username'";
+        $query = mysqli_query($connect, $sql);
+        if(mysqli_num_rows($query)>0){
+            echo "<script type='text/javascript'>alert('Đã tồn tại tài khoản với username $username');</script>";
+        } else {
+            $sql = "insert into users values ('$username','$password','$fullname')";
+            $query = mysqli_query($connect, $sql);
+            $_SESSION['username'] = $username;
+            header("Location: index.php");
+            exit;
+        }
+    }
+    ?>
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <!-- Tabs Titles -->
