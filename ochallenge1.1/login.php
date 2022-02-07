@@ -1,7 +1,7 @@
 <?php
-    session_start();
-	$connect = mysqli_connect('localhost','ncvinh','vinh2000','task_manager');
-	mysqli_set_charset($connect, "utf8");
+session_start();
+$connect = mysqli_connect('localhost', 'ncvinh', 'vinh2000', 'task_manager');
+mysqli_set_charset($connect, "utf8");
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,24 +17,29 @@
 
 <body>
 <?php
-    if (isset($_SESSION['username'])) {
-        header('Location: index.php');
+if (isset($_SESSION['username']))
+{
+    header('Location: index.php');
+    exit;
+}
+if (isset($_POST["username"]) && isset($_POST["password"]))
+{
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $sql = "Select * from users where username = '$username' and password = '$password'";
+    $query = mysqli_query($connect, $sql);
+    if (mysqli_num_rows($query) == 0)
+    {
+        echo "<script type='text/javascript'>alert('Tài khoản hoặc mật khẩu không đúng!');</script>";
+    }
+    else
+    {
+        $_SESSION['username'] = $username;
+        header("Location: index.php");
         exit;
     }
-    if(isset($_POST["username"])&&isset($_POST["password"])){
-        $username = $_POST["username"];
-        $password = $_POST["password"];
-        $sql = "Select * from users where username = '$username' and password = '$password'";
-        $query = mysqli_query($connect, $sql);
-        if(mysqli_num_rows($query)==0){
-            echo "<script type='text/javascript'>alert('Tài khoản hoặc mật khẩu không đúng!');</script>";
-        } else {
-            $_SESSION['username'] = $username;
-            header("Location: index.php");
-            exit;
-        }
-    }
-    ?>
+}
+?>
     
 
     <div class="wrapper fadeInDown">
