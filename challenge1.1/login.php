@@ -23,16 +23,17 @@ mysqli_set_charset($connect, "utf8");
     }
     if (isset($_POST["username"]) && isset($_POST["password"])) {
         $username = $_POST["username"];
-        $password = $_POST["password"];
+        $password = md5($_POST["password"]);
         $sql = "Select * from users where username = '$username' and password = '$password'";
         $query = mysqli_query($connect, $sql);
         if (mysqli_num_rows($query) == 0) {
-            echo "<script type='text/javascript'>alert('Tài khoản hoặc mật khẩu không đúng!');</script>";
-        } else {
-            $_SESSION['username'] = $username;
-            header("Location: index.php");
-            exit;
-        }
+                echo "<script type='text/javascript'>alert('Tài khoản hoặc mật khẩu không đúng!');</script>";
+            } else {
+                $_SESSION['username'] = $username;
+                header("Location: index.php");
+                exit;
+            }
+        
     }
     ?>
 

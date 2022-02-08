@@ -43,7 +43,7 @@ mysqli_set_charset($connect, "utf8");
 
         $username = $_POST["username"];
         $fullname = $_POST["fullname"];
-        $password = $_POST["password"];
+        $password = md5($_POST["password"]);
         $sql = "Select * from users where username = '$username'";
         $query = mysqli_query($connect, $sql);
         if (mysqli_num_rows($query) > 0) {
@@ -51,9 +51,13 @@ mysqli_set_charset($connect, "utf8");
         } else {
             $sql = "insert into users values ('$username','$password','$fullname')";
             $query = mysqli_query($connect, $sql);
-            $_SESSION['username'] = $username;
-            header("Location: index.php");
-            exit;
+            if ($query) {
+                $_SESSION['username'] = $username;
+                header("Location: index.php");
+                exit;
+            } else {
+                echo "<script type='text/javascript'>alert('Lỗi không xác định!');</script>";
+            }
         }
     }
     ?>
