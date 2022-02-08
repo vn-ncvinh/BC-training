@@ -1,10 +1,9 @@
-<?php
-session_start();
-$connect = mysqli_connect('localhost', 'ncvinh', 'vinh2000', 'task_manager');
-mysqli_set_charset($connect, "utf8");
-?>
 <!DOCTYPE html>
 <html>
+<?php
+include 'dbconfig.php';
+session_start();
+?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <head>
@@ -47,7 +46,7 @@ mysqli_set_charset($connect, "utf8");
         $sql = "Select * from users where username = '$username'";
         $query = mysqli_query($connect, $sql);
         if (mysqli_num_rows($query) > 0) {
-            echo "<script type='text/javascript'>alert('Đã tồn tại tài khoản với username $username');</script>";
+            err('Đã tồn tại tài khoản với username ' . $username);
         } else {
             $sql = "insert into users values ('$username','$password','$fullname')";
             $query = mysqli_query($connect, $sql);
@@ -56,7 +55,7 @@ mysqli_set_charset($connect, "utf8");
                 header("Location: index.php");
                 exit;
             } else {
-                echo "<script type='text/javascript'>alert('Lỗi không xác định!');</script>";
+                err('Lỗi không xác định!s');
             }
         }
     }

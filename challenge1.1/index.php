@@ -1,12 +1,11 @@
+<html>
 <?php
+include 'dbconfig.php';
 session_start();
 if (!isset($_SESSION['username'])) {
     header('Location: login.php');
 }
-$connect = mysqli_connect('localhost', 'ncvinh', 'vinh2000', 'task_manager');
-mysqli_set_charset($connect, "utf8");
 ?>
-<html>
 
 <head>
     <title>Task Manage</title>
@@ -39,7 +38,6 @@ mysqli_set_charset($connect, "utf8");
         $str = $_POST['newtask'];
         $sql = "INSERT INTO tasks (username, task) values ('$username', '$str')";
         $query = mysqli_query($connect, $sql);
-        // echo "<script type='text/javascript'>alert('Thành công!');</script>";
     }
 
     if (isset($_POST['del'])) {
