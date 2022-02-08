@@ -1,11 +1,12 @@
 <?php
-    session_start();
-	$connect = mysqli_connect('localhost','ncvinh','vinh2000','task_manager');
-	mysqli_set_charset($connect, "utf8");
+session_start();
+$connect = mysqli_connect('localhost', 'ncvinh', 'vinh2000', 'task_manager');
+mysqli_set_charset($connect, "utf8");
 ?>
 <!DOCTYPE html>
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 <head>
     <title>Create new User - Task Manage</title>
     <link href="css/taskmanage.css" rel="stylesheet">
@@ -13,7 +14,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-
         function checkPass() {
             var pass1 = document.getElementById("password");
             var pass2 = document.getElementById("password2");
@@ -32,20 +32,21 @@
         }
     </script>
 </head>
+
 <body>
     <?php
     if (isset($_SESSION['username'])) {
         header('Location: index.php');
         exit;
     }
-    if(isset($_POST["username"])&&isset($_POST["fullname"])&&isset($_POST["password"])){
-        
+    if (isset($_POST["username"]) && isset($_POST["fullname"]) && isset($_POST["password"])) {
+
         $username = $_POST["username"];
         $fullname = $_POST["fullname"];
         $password = $_POST["password"];
         $sql = "Select * from users where username = '$username'";
         $query = mysqli_query($connect, $sql);
-        if(mysqli_num_rows($query)>0){
+        if (mysqli_num_rows($query) > 0) {
             echo "<script type='text/javascript'>alert('Đã tồn tại tài khoản với username $username');</script>";
         } else {
             $sql = "insert into users values ('$username','$password','$fullname')";
@@ -59,21 +60,17 @@
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <!-- Tabs Titles -->
-
-            <!-- Icon -->
             <div class="fadeIn first">
                 <h1 style="font-family: 'Courier New', Courier, monospace; color: cornflowerblue; padding-top: 1ch;">Đăng ký tài khoản</h1>
             </div>
 
             <!-- Login Form -->
-            <form action="" method = "POST">
+            <form action="" method="POST">
                 <input type="text" id="username" class="fadeIn second" name="username" placeholder="Tài khoản">
                 <input type="text" id="fullname" class="fadeIn second" name="fullname" placeholder="Họ Tên">
-                <input type="password" id="password" class="fadeIn third" name="password" placeholder="Mật Khẩu"
-                    onkeyup="checkPass();">
-                <input type="password" id="password2" class="fadeIn third" placeholder="Nhập lại mật khẩu"
-                    onkeyup="checkPass();">
-                <input type="submit" class="fadeIn fourth" value="Đăng ký" id = "regbtn"> 
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="Mật Khẩu" onkeyup="checkPass();">
+                <input type="password" id="password2" class="fadeIn third" placeholder="Nhập lại mật khẩu" onkeyup="checkPass();">
+                <input type="submit" class="fadeIn fourth" value="Đăng ký" id="regbtn">
             </form>
 
             <!-- Remind Passowrd -->
