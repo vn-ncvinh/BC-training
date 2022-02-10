@@ -20,7 +20,6 @@ class CreateTasksTable extends Migration
             $table->date('create_time')->default(date(now()));
             $table->date('finish_time')->nullable();
             $table->integer('status')->default(0);
-            $table->timestamps();
         });
     }
 

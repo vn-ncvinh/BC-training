@@ -44,6 +44,7 @@
                 <th>Hành động</th>
             </tr>
             @foreach ($tasks as $task)
+            @if($task->status==1 || $task->status == 0)
             <tr>
                 <td>{{ $task->content }}</td>
                 <td>
@@ -57,10 +58,12 @@
                 <td>
                 <br>
                 <form method ="POST">@csrf<button type="submit" name="delete" value="{{$task->id}}">Xoá</button></form>
+                @if($task->status != 1)
                 <form method ="POST">@csrf<button type="submit" name="finish" value="{{$task->id}}">Hoàn thành</button></form>
+                @endif
                 </td>
             </tr>
-
+            @endif
             @endforeach
         </table>
     </div>

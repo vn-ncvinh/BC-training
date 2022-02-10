@@ -27,7 +27,7 @@ class TasksController extends Controller
 
         if ($request->has('delete')) {
             $task = Tasks::where('id', $request->delete)->first();
-            $task->delete();
+            $task->update(['status' => 2]);
         }
 
         return back();
