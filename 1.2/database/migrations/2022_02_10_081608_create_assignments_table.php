@@ -15,11 +15,9 @@ class CreateAssignmentsTable extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('fileurl');
+            $table->string('filename');
             $table->string('Description');
-            $table->timestamp('Deadline');
-            $table->timestamps();
+            $table->dateTime('Deadline');
         });
     }
 

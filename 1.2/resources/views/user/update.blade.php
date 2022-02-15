@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <head>
-    <title>Create new User - Task Manage</title>
+    <title>Update {{$data->username}} - Task Manage</title>
     <link href="/css/taskmanage.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -37,7 +37,7 @@
             <div id="formContent">
                 <!-- Tabs Titles -->
                 <div class="fadeIn first">
-                    <h1 style="font-family: 'Courier New', Courier, monospace; color: cornflowerblue; padding-top: 1ch;">Update Info</h1>
+                    <h1 style="font-family: 'Courier New', Courier, monospace; color: cornflowerblue; padding-top: 1ch;">Update {{$data->username}}</h1>
                 </div>
                 @if (\Session::has('message'))
                 <div class="alert alert-success">
@@ -49,23 +49,22 @@
                 <!-- Login Form -->
                 <form action="" method="POST">
                     @csrf
-                    <input type="text" id="username" class="fadeIn second" name="username" placeholder="Tài khoản" value="{{$data->username}}">
-                    <input type="text" id="fullname" class="fadeIn second" name="fullname" placeholder="Họ Tên" value="{{$data->fullname}}">
-                    <input type="email" id="email" class="fadeIn second" name="email" placeholder="Email" value="{{$data->email}}">
-                    <input type="tel" id="sdt" class="fadeIn second" name="phonenumber" placeholder="SĐT" pattern="0[0-9]{9}" value="{{$data->phonenumber}}">
+                    <input type="text" id="fullname" class="fadeIn second" name="fullname" placeholder="Họ Tên" value="{{$data->fullname}}" required>
+                    <input type="email" id="email" class="fadeIn second" name="email" placeholder="Email" value="{{$data->email}}" required>
+                    <input type="tel" id="sdt" class="fadeIn second" name="phonenumber" placeholder="SĐT" pattern="0[0-9]{9}" value="{{$data->phonenumber}}" required>
                     @if($data->role==0)
-                    <select name="role" id="role">
+                    <select name="role" id="role" required>
                         <option value="0" selected>Học viên</option>
                         <option value="1">Giảng viên</option>
                     </select>
                     @elseif($data->role==1)
-                    <select name="role" id="role">
+                    <select name="role" id="role" required>
                         <option value="0" selected>Học viên</option>
                         <option value="1" selected>Giảng viên</option>
                     </select>
                     @endif
-                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Mật Khẩu" onkeyup="checkPass();" value="{{$data->password}}">
-                    <input type="password" id="password2" class="fadeIn third" name="password2" placeholder="Nhập lại mật khẩu" onkeyup="checkPass();" value="{{$data->password}}">
+                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Mật Khẩu" onkeyup="checkPass();" value="{{$data->password}}" required>
+                    <input type="password" id="password2" class="fadeIn third" name="password2" placeholder="Nhập lại mật khẩu" onkeyup="checkPass();" value="{{$data->password}}" required>
                     <input type="submit" class="fadeIn fourth" value="Update" id="updatebtn">
                 </form>
 

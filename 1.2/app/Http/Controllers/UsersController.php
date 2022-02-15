@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Messages;
 use App\Models\Users;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
@@ -18,7 +15,7 @@ class UsersController extends Controller
         if ($request->session()->has('username')) {
             return redirect()->route('index');
         }
-        return view('login');
+        return view('user.login');
     }
 
     public function login(Request $request)
@@ -50,10 +47,8 @@ class UsersController extends Controller
 
     public function createpage(Request $request)
     {
-        if ($request->session()->has('username')) {
-            if (Session::get('role') == 1) {
-                return view('create');
-            }
+        if (Session::get('role') == 1) {
+            return view('user.create');
         }
         return redirect()->route('index');
     }
@@ -89,21 +84,37 @@ class UsersController extends Controller
         return redirect()->back();
     }
 
-    public function updatepage($id)
+    public function updatepage($username)
     {
-        if (Session::get('role') == 1) {
-            $data = Users::where('id', $id)->first();
-            return view('update', compact('data'));
+        if (Session::get('role') == 1 || Session::get('username') == $username) {
+            $data = Users::where('username', $username)->first();
+            if ($data) {
+                return view('user.update', compact('data'));
+            }
         }
         return redirect()->route('index');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $username)
     {
-        if (Session::get('role') == 1) {
-            $user = Users::where('id', $id)->first();
-            $data = $request->all();
-            $user->update($data);
+        if (Session::get('role') == 1 || Session::get('username') == $username) {
+            $user = Users::where('username', $username)->first();
+            $data = $request->validate([
+                'fullname' => ['required'],
+                'email' => ['required'],
+                'phonenumber' => ['required'],
+                'role' => ['required'],
+                'password' => ['required'],
+            ]);
+            if ($user) {
+                if($request->password != $user->password && $username == Session::get('username')){
+                    $user->update($data);
+                    return redirect()->route('logout');
+                }
+                $user->update($data);
+            }
+            
+            
         }
         return redirect()->back()->with([
             'message' => 'Thanh cong!',
@@ -111,57 +122,18 @@ class UsersController extends Controller
     }
 
 
-    public function delete($id)
+    public function delete($username)
     {
         if (Session::get('role') == 1) {
-            $user = Users::where('id', $id)->first();
+            $user = Users::where('username', $username)->first();
             if ($user) {
-                if ($user->username == Session::get('username')) {
-                    $user->delete();
+                $user->delete();
+                if ($username == Session::get('username')) {
                     return redirect()->route('logout');
                 }
-                $user->delete();
                 return redirect()->route('index');
             }
         }
         return redirect()->route('index');
-    }
-
-    public function detail($username)
-    {
-        $from = Users::where('username', Session::get('username'))->first();
-        $to = Users::where('username', $username)->first();
-        if ($from && $to) {
-            if($from == $to){
-                $messages = Messages::where('to', $to->username)->get()->all();
-            } else {
-                $messages = Messages::where('to', $to->username)->where('from', $from->username)->get()->all();
-                $messages = array_merge($messages, Messages::where('to', $from->username)->where('from', $to->username)->get()->all());
-                usort($messages, function($a, $b) {return strcmp($a->time, $b->time);});
-            }
-            $data = $to;
-            return view('detail', compact('data', 'messages'));
-        }
-        return redirect()->route('index');
-    }
-
-    public function sendmessage($username, Request $request)
-    {
-        $from = Users::where('username', Session::get('username'))->first();
-        $to = Users::where('username', $username)->first();
-        if ($from && $to) {
-            $content = $request->content;
-            $data = [
-                'from' => $from->username,
-                'to' => $to->username,
-                'content' => $content
-            ];
-            Messages::create($data);
-        }
-        return redirect()->back();
-    }
-
-    public function view(){
-        return $this->detail(Session::get('username'));
     }
 }

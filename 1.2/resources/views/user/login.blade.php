@@ -32,10 +32,7 @@
                 <input type="submit" class="fadeIn fourth" value="Đăng nhập">
             </form>
 
-            <!-- Remind Passowrd -->
-            <div id="formFooter">
-                <a class="underlineHover" href="/create">Đăng ký mới?</a>
-            </div>
+            
         </div>
     </div>
 </body>
