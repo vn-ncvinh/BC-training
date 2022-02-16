@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Assignment [{{$challenge->name}}]</title>
+    <title>Challenge [{{$challenge->name}}]</title>
     <style>
         body {
             background-color: grey;
