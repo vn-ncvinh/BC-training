@@ -37,7 +37,12 @@ class ChallengesController extends Controller
             }
             $challengefile = $request->file('challengefile');
             $filename = Controller::selectFilename($challengefile->getClientOriginalName(), 'challenges/');
-
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            if(strcmp(strtoupper($ext), strtoupper('txt')) != 0){
+                return redirect()->back()->with([
+                    'message' => 'Only accept txt files!',
+                ]);
+            }
             $challengefile->storeAs('challenges', $filename, 'local');
             $data = [
 
@@ -60,7 +65,7 @@ class ChallengesController extends Controller
 
     public function answer($id, Request $request)
     {
-        if(Controller::check()){
+        if (Controller::check()) {
             if ($request->has('answer')) {
                 $challenge = Challenges::where('id', $id)->first();
                 if ($challenge) {
@@ -69,8 +74,15 @@ class ChallengesController extends Controller
                     $filename = substr($filename, 0, strlen($filename) - strlen($ext) - 1);
                     $sim = similar_text(strtoupper($filename), strtoupper($request->answer), $perc);
                     if ($perc == 100) {
+                        $content = [];
+                        $fh = fopen(storage_path('app\\challenges\\'.$filename.'.'.$ext), 'r');
+                        while ($line = fgets($fh)) {
+                            array_push($content, $line);
+                        }
+                        fclose($fh);
                         return redirect()->back()->with([
                             'message' => 'Exactly!',
+                            'content' => $content,
                         ]);
                     }
                     return redirect()->back()->with([
@@ -82,10 +94,11 @@ class ChallengesController extends Controller
         return redirect()->back();
     }
 
-    public function delete($id){
-        if(Controller::checkrole()){
+    public function delete($id)
+    {
+        if (Controller::checkrole()) {
             $challenge = Challenges::where('id', $id)->first();
-            if($challenge){
+            if ($challenge) {
                 Storage::delete('challenges/' . $challenge->filename);
                 $challenge->delete();
             }

@@ -23,7 +23,7 @@
                 </div>
                 @if (\Session::has('message'))
                 <div class="alert alert-success">
-                {!! \Session::get('message') !!}
+                    {!! \Session::get('message') !!}
                 </div>
                 @endif
                 <!-- Login Form -->

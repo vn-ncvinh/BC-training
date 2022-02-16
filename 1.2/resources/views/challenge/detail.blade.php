@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>Challenge [{{$challenge->name}}]</title>
     <style>
         body {
@@ -27,6 +28,9 @@
 
 <body>
     <?php
+
+use Illuminate\Support\Facades\Session;
+
     include "sideav.blade.php";
     ?>
     <div class="center-div" id="main">
@@ -35,15 +39,23 @@
             <H1>Challenge [{{$challenge->name}}]</H1>
 
             <div>
-                
+
                 <br><br>
                 @if (\Session::has('message'))
                 {{Session::get('message')}}<br><br>
                 @endif
+                @if (\Session::has('content'))
+                <h3>Content</h3>
+                @foreach( Session::get('content') as $line)
+                {{$line}}<br>
+                @endforeach
+                <br><br>
+                @endif
+                
                 <a id="hint" style="display: none; color: green;">Hint: {{$challenge->hint}}</a>
                 <script>
-                    function showhint(){
-                        if(document.getElementById('hint').style.display == 'block'){
+                    function showhint() {
+                        if (document.getElementById('hint').style.display == 'block') {
                             document.getElementById('hint').style.display = 'none';
                         } else {
                             document.getElementById('hint').style.display = 'block';
@@ -62,7 +74,7 @@
                     <br>
                     <button type="submit">Submit</button>
                 </form>
-                
+
             </div>
         </div>
     </div>

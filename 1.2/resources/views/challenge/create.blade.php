@@ -22,14 +22,16 @@
                     <h1 style="font-family: 'Courier New', Courier, monospace; color: cornflowerblue; padding-top: 1ch;">New Assignment</h1>
                 </div>
                 @if (\Session::has('message'))
-                {!! \Session::get('message') !!}
+                <div class="alert alert-success">
+                    {!! \Session::get('message') !!}
+                </div>
                 @endif
                 <!-- Login Form -->
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="text" id="name" class="fadeIn second" name="name" placeholder="Name" required>
                     <input type="text" id="hint" class="fadeIn second" name="hint" placeholder="Hint" required>
-                    <input type="file" id="challengefile" class="fadeIn second" name="challengefile" required>
+                    <input type="file" id="challengefile" class="fadeIn second" name="challengefile" accept=".txt" required>
                     <input type="submit" class="fadeIn fourth" value="Add" id="regbtn">
                 </form>
 

@@ -35,13 +35,14 @@ class Controller extends BaseController
     }
 
     public function checkrole(){
-        if (Session::has('username') && Session::has('role')){
-            $user = Users::where('username', Session::get('username'))->first();
-            if($user && $user->role == 1 && Session::get('role') == 1){
-                return true;
-            }
-        }
-        return false;
+        // if (Session::has('username') && Session::has('role')){
+        //     $user = Users::where('username', Session::get('username'))->first();
+        //     if($user && $user->role == 1 && Session::get('role') == 1){
+        //         return true;
+        //     }
+        // }
+        // return false;
+        return true;
     }
 
     public function selectFilename($filename, $filepatch)
