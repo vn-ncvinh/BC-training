@@ -27,9 +27,26 @@ Route::get('messages', [App\Http\Controllers\MessagesController::class, 'view'])
 
 
 
-Route::get('assignments', [App\Http\Controllers\AssignmentsController::class, 'index'])->name('assignments');
+Route::get('assignments', [App\Http\Controllers\AssignmentsController::class, 'indexpage'])->name('assignments');
 
 Route::get('assignments/create', [App\Http\Controllers\AssignmentsController::class, 'createpage']);
 Route::post('assignments/create', [App\Http\Controllers\AssignmentsController::class, 'create']);
 Route::get('assignments/delete/{id}', [App\Http\Controllers\AssignmentsController::class, 'delete']);
-Route::get('assignments/images/{filename}', [App\Http\Controllers\AssignmentsController::class, 'downloadfile']);
+Route::get('/assignments/{id}/file/', [App\Http\Controllers\AssignmentsController::class, 'downloadfile']);
+Route::post('assignments/detail/{id}', [App\Http\Controllers\AssignmentsController::class, 'updateFile']);
+
+
+Route::get('assignments/detail/{id}', [App\Http\Controllers\ReturnAssignmentsController::class, 'route'])->name('turninpage');
+Route::post('assignments/{id}/turnin', [App\Http\Controllers\ReturnAssignmentsController::class, 'turnin']);
+Route::get('assignments/{id}/{username}', [App\Http\Controllers\ReturnAssignmentsController::class, 'downloadfile']);
+Route::get('assignments/{id}/undo', [App\Http\Controllers\ReturnAssignmentsController::class, 'undoturnin']);
+
+
+Route::get('challenges', [App\Http\Controllers\ChallengesController::class, 'indexpage'])->name('challenges');
+Route::get('challenges/create', [App\Http\Controllers\ChallengesController::class, 'createpage']);
+Route::post('challenges/create', [App\Http\Controllers\ChallengesController::class, 'create']);
+Route::get('challenges/detail/{id}', [App\Http\Controllers\ChallengesController::class, 'detail']);
+Route::get('challenges/delete/{id}', [App\Http\Controllers\ChallengesController::class, 'delete']);
+Route::post('challenges/detail/{id}', [App\Http\Controllers\ChallengesController::class, 'answer']);
+
+

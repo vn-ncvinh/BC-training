@@ -52,7 +52,7 @@
             <H1>Assignments</H1>
             @if(Session::get('role') == 1)
             <div>
-                <a href="assignments/create">
+                <a href="/challenges/create">
                 <button>Create</button>
             </a>
             </div>
@@ -60,20 +60,18 @@
             <br>
             <table align=center>
                 <tr>
-                    <th>Dueto</th>
-                    <th>description</th>
+                    <th>Name</th>
                     <th>Action</th>
                 </tr>
-                @foreach($list as $data)
+                @foreach($challenges as $data)
                 <tr>
-                    <td>{{$data->deadline}}</td>
-                    <td>{{$data->description}}</td>
+                    <td>{{$data->name}}</td>
                     <td>
-                    <a href="assignments/detail/{{$data->id}}">
+                    <a href="/challenges/detail/{{$data->id}}">
                             <button>Detail</button>
                         </a>
                         @if(Session::get('role') == 1)
-                        <a href="assignments/delete/{{$data->id}}">
+                        <a href="/challenges/delete/{{$data->id}}">
                             <button>Delete</button>
                         </a>
                         @endif

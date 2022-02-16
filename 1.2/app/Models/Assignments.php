@@ -11,7 +11,7 @@ class Assignments extends Model
     public $timestamps = false;
     protected $fillable = [
         'filename',
-        'Description',
-        'Deadline'
+        'description',
+        'deadline'
     ];
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -10,9 +11,9 @@ class UsersController extends Controller
 {
 
 
-    public function loginpage(Request $request)
+    public function loginpage()
     {
-        if ($request->session()->has('username')) {
+        if (Controller::check()) {
             return redirect()->route('index');
         }
         return view('user.login');
@@ -45,9 +46,9 @@ class UsersController extends Controller
     }
 
 
-    public function createpage(Request $request)
+    public function createpage()
     {
-        if (Session::get('role') == 1) {
+        if (Controller::checkrole()) {
             return view('user.create');
         }
         return redirect()->route('index');
@@ -55,38 +56,36 @@ class UsersController extends Controller
 
     public function create(Request $request)
     {
-        if (Session::get('role') == 1) {
-            if ($request->has('username') && $request->has('fullname') && $request->has('password') && $request->has('password2') && $request->has('email') && $request->has('phonenumber') && $request->has('role')) {
-                if ($request->password == $request->password2) {
-                    $user = Users::where('username', $request->username)->first();
-                    if ($user) {
-                        return redirect()->back()->with([
-                            'message' => 'Người dùng đã tồn tại!',
-                        ]);
-                    } else {
-                        $data = $request->validate([
-                            'username' => ['required'],
-                            'fullname' => ['required'],
-                            'email' => ['required'],
-                            'phonenumber' => ['required'],
-                            'role' => ['required'],
-                            'password' => ['required'],
-                        ]);
-                        $user = Users::create($data);
-                        return redirect()->route('index');
-                    }
+        if (Controller::checkrole()) {
+            if ($request->password == $request->password2) {
+                $user = Users::where('username', $request->username)->first();
+                if ($user) {
+                    return redirect()->back()->with([
+                        'message' => 'Người dùng đã tồn tại!',
+                    ]);
+                } else {
+                    $data = $request->validate([
+                        'username' => ['required'],
+                        'fullname' => ['required'],
+                        'email' => ['required'],
+                        'phonenumber' => ['required'],
+                        'role' => ['required'],
+                        'password' => ['required'],
+                    ]);
+                    $user = Users::create($data);
+                    return redirect()->route('index');
                 }
-                return redirect()->back()->with([
-                    'message' => 'Hai mật khẩu không khớp nhau!',
-                ]);
             }
+            return redirect()->back()->with([
+                'message' => 'Hai mật khẩu không khớp nhau!',
+            ]);
         }
         return redirect()->back();
     }
 
     public function updatepage($username)
     {
-        if (Session::get('role') == 1 || Session::get('username') == $username) {
+        if (Controller::checkrole() || Session::get('username') == $username) {
             $data = Users::where('username', $username)->first();
             if ($data) {
                 return view('user.update', compact('data'));
@@ -97,34 +96,49 @@ class UsersController extends Controller
 
     public function update(Request $request, $username)
     {
-        if (Session::get('role') == 1 || Session::get('username') == $username) {
-            $user = Users::where('username', $username)->first();
-            $data = $request->validate([
-                'fullname' => ['required'],
-                'email' => ['required'],
-                'phonenumber' => ['required'],
-                'role' => ['required'],
-                'password' => ['required'],
-            ]);
-            if ($user) {
-                if($request->password != $user->password && $username == Session::get('username')){
-                    $user->update($data);
-                    return redirect()->route('logout');
+        if (Controller::checkrole() || Session::get('username') == $username) {
+            if ($request->password == $request->password2) {
+                $user = Users::where('username', $username)->first();
+                if (Session::get('role') == 1) {
+                    $data = $request->validate([
+                        'fullname' => ['required'],
+                        'email' => ['required'],
+                        'phonenumber' => ['required'],
+                        'role' => ['required'],
+                        'password' => ['required'],
+                    ]);
+                } else {
+                    $data = $request->validate([
+                        'fullname' => ['required'],
+                        'email' => ['required'],
+                        'phonenumber' => ['required'],
+                        'password' => ['required'],
+                    ]);
                 }
-                $user->update($data);
+
+                if ($user) {
+                    if ($request->password != $user->password && $username == Session::get('username')) {
+                        $user->update($data);
+                        return redirect()->route('logout');
+                    }
+                    $user->update($data);
+                    return redirect()->back()->with([
+                        'message' => 'Thanh cong!',
+                    ]);
+                }
             }
-            
-            
+
+            return redirect()->back()->with([
+                'message' => '2 Mat khau khong giong nhau!',
+            ]);
         }
-        return redirect()->back()->with([
-            'message' => 'Thanh cong!',
-        ]);
+        return redirect()->back();
     }
 
 
     public function delete($username)
     {
-        if (Session::get('role') == 1) {
+        if (Controller::checkrole()) {
             $user = Users::where('username', $username)->first();
             if ($user) {
                 $user->delete();

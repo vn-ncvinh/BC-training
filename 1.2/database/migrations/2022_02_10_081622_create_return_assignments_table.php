@@ -17,8 +17,8 @@ class CreateReturnAssignmentsTable extends Migration
             $table->id();
             $table->string('username');
             $table->string('assignmentid');
-            $table->string('file');
-            $table->time('submit_time')->default(now());
+            $table->string('filename');
+            $table->dateTime('submit_time')->useCurrent();
         });
     }
 

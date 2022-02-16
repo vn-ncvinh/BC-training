@@ -41,9 +41,7 @@
                 </div>
                 @if (\Session::has('message'))
                 <div class="alert alert-success">
-                    <ul>
-                        <li>{!! \Session::get('message') !!}</li>
-                    </ul>
+                    {!! \Session::get('message') !!}
                 </div>
                 @endif
                 <!-- Login Form -->
@@ -52,6 +50,7 @@
                     <input type="text" id="fullname" class="fadeIn second" name="fullname" placeholder="Họ Tên" value="{{$data->fullname}}" required>
                     <input type="email" id="email" class="fadeIn second" name="email" placeholder="Email" value="{{$data->email}}" required>
                     <input type="tel" id="sdt" class="fadeIn second" name="phonenumber" placeholder="SĐT" pattern="0[0-9]{9}" value="{{$data->phonenumber}}" required>
+                    @if(Session::get('role')==1)
                     @if($data->role==0)
                     <select name="role" id="role" required>
                         <option value="0" selected>Học viên</option>
@@ -62,6 +61,7 @@
                         <option value="0" selected>Học viên</option>
                         <option value="1" selected>Giảng viên</option>
                     </select>
+                    @endif
                     @endif
                     <input type="password" id="password" class="fadeIn third" name="password" placeholder="Mật Khẩu" onkeyup="checkPass();" value="{{$data->password}}" required>
                     <input type="password" id="password2" class="fadeIn third" name="password2" placeholder="Nhập lại mật khẩu" onkeyup="checkPass();" value="{{$data->password}}" required>

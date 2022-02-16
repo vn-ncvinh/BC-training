@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Messages;
 use App\Models\Users;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class MessagesController extends Controller
 
     public function detail($username)
     {
-        if (Session::get('username')) {
+        if (Controller::check()) {
             $from = Users::where('username', Session::get('username'))->first();
             $to = Users::where('username', $username)->first();
             if ($from && $to) {
@@ -35,7 +36,7 @@ class MessagesController extends Controller
 
     public function sendmessage($username, Request $request)
     {
-        if (Session::get('username')) {
+        if (Controller::check()) {
             $from = Users::where('username', Session::get('username'))->first();
             $to = Users::where('username', $username)->first();
             if ($from && $to) {
@@ -53,7 +54,7 @@ class MessagesController extends Controller
 
     public function view()
     {
-        if(Session::get('username')){
+        if(Controller::check()){
             return $this->detail(Session::get('username'));
         }
         return redirect()->route('index');  

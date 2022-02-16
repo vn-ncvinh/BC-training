@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Challenges extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+    protected $fillable = [
+        'name',
+        'hint',
+        'filename'
+    ];
 }

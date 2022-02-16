@@ -41,9 +41,7 @@
                 </div>
                 @if (\Session::has('message'))
                 <div class="alert alert-success">
-                    <ul>
-                        <li>{!! \Session::get('message') !!}</li>
-                    </ul>
+                    {!! \Session::get('message') !!}
                 </div>
                 @endif
                 <!-- Login Form -->
