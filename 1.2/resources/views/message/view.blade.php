@@ -138,7 +138,7 @@
                             @foreach($messages as $message)
                             <tr>
                                 <td>{{$message->time}}</td>
-                                <td><a href="/detail/{{$message->from}}">{{$message->from}}</a></td>
+                                <td><a href="/user/detail/{{$message->from}}">{{$message->from}}</a></td>
                                 <td>{{$message->content}}</td>
                             </tr>
                             @endforeach
