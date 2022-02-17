@@ -26,6 +26,7 @@
         table {
             text-align: center;
             border-collapse: collapse;
+            table-layout: fixed;
             width: 95%;
         }
 

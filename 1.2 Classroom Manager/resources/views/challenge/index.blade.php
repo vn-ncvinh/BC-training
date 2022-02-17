@@ -27,7 +27,7 @@
             text-align: center;
             border-collapse: collapse;
             table-layout: fixed;
-            width: 90%;
+            width: 95%;
         }
 
         th {
