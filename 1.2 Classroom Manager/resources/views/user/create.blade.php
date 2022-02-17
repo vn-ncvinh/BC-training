@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <head>
-    <title>Create new User - Task Manage</title>
+    <title>Create new User</title>
     <link href="/css/taskmanage.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -47,22 +47,22 @@
                 <!-- Login Form -->
                 <form action="" method="POST">
                     @csrf
-                    <input type="text" id="username" class="fadeIn second" name="username" placeholder="Tài khoản" required>
-                    <input type="text" id="fullname" class="fadeIn second" name="fullname" placeholder="Họ Tên" required>
+                    <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username" required>
+                    <input type="text" id="fullname" class="fadeIn second" name="fullname" placeholder="Full name" required>
                     <input type="email" id="email" class="fadeIn second" name="email" placeholder="Email" required>
-                    <input type="tel" id="sdt" class="fadeIn second" name="phonenumber" placeholder="SĐT" pattern="0[0-9]{9}" required>
+                    <input type="tel" id="sdt" class="fadeIn second" name="phonenumber" placeholder="Phone number" pattern="0[0-9]{9}" required>
                     <select name="role" id="role" required>
-                        <option value="0">Học viên</option>
-                        <option value="1">Giảng viên</option>
+                        <option value="0">Student</option>
+                        <option value="1">Teacher</option>
                     </select>
-                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Mật Khẩu" onkeyup="checkPass();" required>
-                    <input type="password" id="password2" class="fadeIn third" name="password2" placeholder="Nhập lại mật khẩu" onkeyup="checkPass();" required>
-                    <input type="submit" class="fadeIn fourth" value="Đăng ký" id="regbtn">
+                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password" onkeyup="checkPass();" required>
+                    <input type="password" id="password2" class="fadeIn third" name="password2" placeholder="Confirm Password" onkeyup="checkPass();" required>
+                    <input type="submit" class="fadeIn fourth" value="Create new User" id="regbtn">
                 </form>
 
                 <!-- Remind Passowrd -->
                 <div id="formFooter">
-                    <a class="underlineHover" href="/login">Đăng nhập?</a>
+                    <a class="underlineHover" href="/">Back to home?</a>
                 </div>
 
             </div>

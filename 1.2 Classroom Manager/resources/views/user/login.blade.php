@@ -25,9 +25,9 @@
             <!-- Login Form -->
             <form action="" method="POST">
                 @csrf
-                <input type="text" id="username" class="fadeIn second" name="username" placeholder="Tài khoản">
-                <input type="password" id="password" class="fadeIn third" name="password" placeholder="Mật khẩu">
-                <input type="submit" class="fadeIn fourth" value="Đăng nhập">
+                <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+                <input type="submit" class="fadeIn fourth" value="Login">
             </form>
 
 
