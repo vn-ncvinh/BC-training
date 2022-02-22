@@ -68,13 +68,13 @@ class ChallengesController extends Controller
             if ($request->has('answer')) {
                 $challenge = Challenges::where('id', $id)->first();
                 if ($challenge) {
-                    $filename = scandir(storage_path('app\\challenges\\'.$id))[2];
+                    $filename = scandir(storage_path('app/challenges/'.$id))[2];
                     $ext = pathinfo($filename, PATHINFO_EXTENSION);
                     $filename = substr($filename, 0, strlen($filename) - strlen($ext) - 1);
                     $sim = similar_text(strtoupper($filename), strtoupper($request->answer), $perc);
                     if ($perc == 100) {
                         $content = [];
-                        $fh = fopen(storage_path('app\\challenges\\'.$id.'\\'.$filename.'.'.$ext), 'r');
+                        $fh = fopen(storage_path('app/challenges/'.$id.'/'.$filename.'.'.$ext), 'r');
                         while ($line = fgets($fh)) {
                             array_push($content, $line);
                         }
