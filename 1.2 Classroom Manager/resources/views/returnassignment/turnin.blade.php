@@ -65,7 +65,7 @@
                 
                 @if($turnin)
                 <br><br><br>
-                You work: <a href="/assignments/{{$assignment->id}}/{{$turnin->username}}">{{$turnin->filename}}</a>
+                You work: <a href="/assignments/{{$assignment->id}}/download/{{$turnin->username}}">{{$turnin->filename}}</a>
                 <br>
                 <br>
                 <a href="/assignments/{{$assignment->id}}/undo">

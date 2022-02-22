@@ -91,7 +91,7 @@
                 @foreach($list as $turnin)
                 <tr>
                     <td>{{$turnin->submit_time}}</td>
-                    <td><a href="/assignments/{{$assignment->id}}/{{$turnin->username}}">{{$turnin->filename}}</a></td>
+                    <td><a href="/assignments/{{$assignment->id}}/download/{{$turnin->username}}">{{$turnin->filename}}</a></td>
                     <td>{{$turnin->fullname}}</td>
                 </tr>
                 @endforeach

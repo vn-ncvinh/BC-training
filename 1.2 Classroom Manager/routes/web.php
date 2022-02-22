@@ -36,9 +36,9 @@ Route::get('/assignments/{id}/file/', [App\Http\Controllers\AssignmentsControlle
 Route::post('assignments/detail/{id}', [App\Http\Controllers\AssignmentsController::class, 'updateFile']);
 
 
-Route::get('assignments/detail/{id}', [App\Http\Controllers\ReturnAssignmentsController::class, 'route'])->name('turninpage');
+Route::get('assignments/{id}', [App\Http\Controllers\ReturnAssignmentsController::class, 'route'])->name('turninpage');
 Route::post('assignments/{id}/turnin', [App\Http\Controllers\ReturnAssignmentsController::class, 'turnin']);
-Route::get('assignments/{id}/{username}', [App\Http\Controllers\ReturnAssignmentsController::class, 'downloadfile']);
+Route::get('assignments/{id}/download/{username}', [App\Http\Controllers\ReturnAssignmentsController::class, 'downloadfile']);
 Route::get('assignments/{id}/undo', [App\Http\Controllers\ReturnAssignmentsController::class, 'undoturnin']);
 
 

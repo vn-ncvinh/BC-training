@@ -70,11 +70,11 @@
                     <td>{{$data->deadline}}</td>
                     <td>{{$data->description}}</td>
                     <td>
-                        <a href="assignments/detail/{{$data->id}}">
+                        <a href="assignments/{{$data->id}}">
                             <button>Detail</button>
                         </a>
                         @if(Session::get('role') == 1)
-                        <a href="assignments/delete/{{$data->id}}">
+                        <a href="assignments/{{$data->id}}/delete">
                             <button>Delete</button>
                         </a>
                         @endif

@@ -85,21 +85,22 @@ class ReturnAssignmentsController extends Controller
     }
 
     public function undoturnin($id, Request $request)
-    {
+    {   
         if (Controller::check()) {
             $assignment = Assignments::where('id', $id)->first();
-            if ($assignment->deadline > Carbon::now()) {
-                $username = Session::get('username');
-
-                $turinwork = ReturnAssignments::where('assignmentid', $id)->where('username', $username)->first();
-                if ($turinwork) {
-                    Storage::delete('turnin/' . $id . '/' . $username . '/' . $turinwork->filename);
-                    $turinwork->delete();
+            if ($assignment) {
+                if ($assignment->deadline > Carbon::now()) {
+                    $username = Session::get('username');
+                    $turinwork = ReturnAssignments::where('assignmentid', $id)->where('username', $username)->first();
+                    if ($turinwork) {
+                        Storage::delete('turnin/' . $id . '/' . $username . '/' . $turinwork->filename);
+                        $turinwork->delete();
+                    }
+                } else {
+                    return redirect()->route('turninpage', $id)->with([
+                        'message' => 'Due!',
+                    ]);
                 }
-            } else {
-                return redirect()->route('turninpage', $id)->with([
-                    'message' => 'Due!',
-                ]);
             }
         }
         return redirect()->route('turninpage', $id);
