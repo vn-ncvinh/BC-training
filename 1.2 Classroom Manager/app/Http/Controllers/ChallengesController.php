@@ -43,14 +43,13 @@ class ChallengesController extends Controller
                     'message' => 'Only accept txt files!',
                 ]);
             }
-            $challengefile->storeAs('challenges', $filename, 'local');
             $data = [
 
                 'name' => $request->name,
-                'hint' => $request->hint,
-                'filename' => $filename,
+                'hint' => $request->hint
             ];
-            Challenges::create($data);
+            $challenge = Challenges::create($data);
+            $challengefile->storeAs('challenges/'.$challenge->id, $filename, 'local');
         }
         return redirect()->route('challenges');
     }
@@ -69,13 +68,13 @@ class ChallengesController extends Controller
             if ($request->has('answer')) {
                 $challenge = Challenges::where('id', $id)->first();
                 if ($challenge) {
-                    $filename = $challenge->filename;
+                    $filename = scandir(storage_path('app\\challenges\\'.$id))[2];
                     $ext = pathinfo($filename, PATHINFO_EXTENSION);
                     $filename = substr($filename, 0, strlen($filename) - strlen($ext) - 1);
                     $sim = similar_text(strtoupper($filename), strtoupper($request->answer), $perc);
                     if ($perc == 100) {
                         $content = [];
-                        $fh = fopen(storage_path('app\\challenges\\'.$filename.'.'.$ext), 'r');
+                        $fh = fopen(storage_path('app\\challenges\\'.$id.'\\'.$filename.'.'.$ext), 'r');
                         while ($line = fgets($fh)) {
                             array_push($content, $line);
                         }
@@ -99,7 +98,7 @@ class ChallengesController extends Controller
         if (Controller::checkrole()) {
             $challenge = Challenges::where('id', $id)->first();
             if ($challenge) {
-                Storage::delete('challenges/' . $challenge->filename);
+                Storage::deleteDirectory('challenges/' . $id);
                 $challenge->delete();
             }
         }

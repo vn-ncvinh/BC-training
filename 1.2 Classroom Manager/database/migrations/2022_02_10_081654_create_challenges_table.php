@@ -17,7 +17,6 @@ class CreateChallengesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('hint');
-            $table->string('filename');
         });
     }
 

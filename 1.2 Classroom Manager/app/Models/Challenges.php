@@ -12,7 +12,6 @@ class Challenges extends Model
     public $timestamps = false;
     protected $fillable = [
         'name',
-        'hint',
-        'filename'
+        'hint'
     ];
 }
